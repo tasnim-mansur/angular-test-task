@@ -1,17 +1,15 @@
-<mat-toolbar color="primary">
-  <span>Create Post</span>
-</mat-toolbar>
-
-<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput formControlName="title">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Body</mat-label>
-    <textarea matInput formControlName="body"></textarea>
-  </mat-form-field>
-
-  <button mat-raised-button color="primary" type="submit">Create</button>
-</form>
+<div class="post-form">
+  <button class="close-button" (click)="onClose()">×</button>
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <input formControlName="id" type="hidden">
+    <div>
+      <label for="title">Title</label>
+      <input id="title" formControlName="title" type="text">
+    </div>
+    <div>
+      <label for="body">Body</label>
+      <textarea id="body" formControlName="body"></textarea>
+    </div>
+    <button type="submit">{{ data.post ? 'Update' : 'Create' }}</button>
+  </form>
+</div>

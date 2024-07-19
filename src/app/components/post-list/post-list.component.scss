@@ -1,4 +1,101 @@
-mat-card {
+/* Container for creating a new post */
+.create-post {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-post-button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.create-post-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Container for post list */
+.post-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Individual post item */
+.post-item {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   margin: 10px;
-  padding: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Allow height to grow with content */
+  min-height: 250px; /* Ensure a minimum height */
+  position: relative; /* Positioning context for footer */
+}
+
+/* Adjust item to flex properly */
+.post-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.post-item h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.post-item p {
+  font-size: 1rem;
+  color: #666;
+  flex: 1; /* Allows the content to grow and push footer to the bottom */
+  margin-bottom: 20px; /* Space for footer */
+  overflow: hidden; /* Prevents overflow issues */
+}
+
+/* Footer with buttons */
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.edit-button, .delete-button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.edit-button {
+  background: #007bff;
+  color: #fff;
+}
+
+.edit-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.delete-button {
+  background: #dc3545;
+  color: #fff;
+}
+
+.delete-button:hover {
+  background: #c82333;
+  transform: scale(1.05);
 }

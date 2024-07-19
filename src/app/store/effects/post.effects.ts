@@ -15,11 +15,14 @@ import {
   deletePostSuccess,
   deletePostFailure
 } from '../actions/post.actions';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import {catchError, map, mergeMap, switchMap} from 'rxjs/operators';
 import { of } from 'rxjs';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable()
 export class PostEffects {
+  constructor(private actions$: Actions, private postService: PostService, private snackBar: MatSnackBar) {}
+
   loadPosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadPosts),
@@ -35,10 +38,16 @@ export class PostEffects {
   createPost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createPost),
-      mergeMap(({ post }) =>
-        this.postService.createPost(post).pipe(
-          map(createdPost => createPostSuccess({ post: createdPost })),
-          catchError(error => of(createPostFailure({ error })))
+      switchMap(action =>
+        this.postService.createPost(action.post).pipe(
+          map(post => {
+            this.snackBar.open('Post created successfully!', 'Close', { duration: 3000 });
+            return createPostSuccess({ post });
+          }),
+          catchError(error => {
+            this.snackBar.open('Failed to create post.', 'Close', { duration: 3000 });
+            return of(createPostFailure({ error }));
+          })
         )
       )
     )
@@ -47,10 +56,16 @@ export class PostEffects {
   updatePost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updatePost),
-      mergeMap(({ id, post }) =>
-        this.postService.updatePost(id, post).pipe(
-          map(updatedPost => updatePostSuccess({ post: updatedPost })),
-          catchError(error => of(updatePostFailure({ error })))
+      switchMap(action =>
+        this.postService.updatePost(action.id, action.post).pipe(
+          map(post => {
+            this.snackBar.open('Post updated successfully!', 'Close', { duration: 3000 });
+            return updatePostSuccess({ post });
+          }),
+          catchError(error => {
+            this.snackBar.open('Failed to update post.', 'Close', { duration: 3000 });
+            return of(updatePostFailure({ error }));
+          })
         )
       )
     )
@@ -59,14 +74,18 @@ export class PostEffects {
   deletePost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deletePost),
-      mergeMap(({ id }) =>
-        this.postService.deletePost(id).pipe(
-          map(() => deletePostSuccess({ id })),
-          catchError(error => of(deletePostFailure({ error })))
+      switchMap(action =>
+        this.postService.deletePost(action.id).pipe(
+          map(() => {
+            this.snackBar.open('Post deleted successfully!', 'Close', { duration: 3000 });
+            return deletePostSuccess({ id: action.id });
+          }),
+          catchError(error => {
+            this.snackBar.open('Failed to delete post.', 'Close', { duration: 3000 });
+            return of(deletePostFailure({ error }));
+          })
         )
       )
     )
   );
-
-  constructor(private actions$: Actions, private postService: PostService) {}
 }

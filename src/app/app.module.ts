@@ -9,46 +9,42 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { postReducer } from './store/reducers/post.reducer';
 import { PostEffects } from './store/effects/post.effects';
 import { AppComponent } from './app.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostCreateComponent } from './components/post-create/post-create.component';
-import { PostUpdateComponent } from './components/post-update/post-update.component';
-import { PostDeleteComponent } from './components/post-delete/post-delete.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import {reducers} from "./store/reducers/index";
-
-const routes: Routes = [
-  { path: 'posts', component: PostListComponent },
-  { path: 'create', component: PostCreateComponent },
-  { path: 'edit/:id', component: PostUpdateComponent },
-  { path: 'delete/:id', component: PostDeleteComponent },
-  { path: '', redirectTo: '/posts', pathMatch: 'full' }
-];
+import { MatDialogModule } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     PostListComponent,
     PostCreateComponent,
-    PostUpdateComponent,
-    PostDeleteComponent
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([PostEffects]),
-    RouterModule.forRoot(routes),
     MatToolbarModule,
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
